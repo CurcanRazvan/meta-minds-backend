@@ -1,0 +1,74 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.petconnect'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+// Autentificare / Sign up / Logare
+// POST /auth/signup — înregistrare utilizator
+// POST /auth/login — autentificare utilizator
+// POST /auth/reset-password — resetare parola (securizat acum, fără leak de existență email), inca nu merge reset-password din ce am testat
+
+// JWT Security
+// Configurat (SecurityConfig, JwtUtil, JwtAuthenticationFilter)
+// /home, /auth/** sunt rute publice (fără login)
+// Restul endpointurilor cer autentificare.
+
+// Landing Page
+// /home — rulat corect din HomeController.
+
+// Animale (AnimalController + AnimalService)
+// CRUD complet: GET, POST, PUT, DELETE pentru animale.
+// Filtrare după rasă, vârstă, locație (/animals/filter)
+// Filtrare cu paginare (/animals/filter-paged).
+
+// Resetare parolă
+// Acum este securizată: indiferent dacă email-ul există sau nu, răspunsul e generic.
+// Parola este validată să aibă minim 8 caractere.
+
+// Excepții
+// Global handler (GlobalExceptionHandler) — toate erorile comune sunt gestionate într-un singur loc.
+
+// DTO-uri
+// AuthRequest, AuthResponse — loginul folosește DTO-uri (bine separat de modelul User).
+
+// Repository-uri
+// UserRepository, AnimalRepository — corect, curate, folosind Spring Data JPA.
+
+// Modelul Animal și User
+// Corect modelate (@Entity, @Table, @Id, etc.)
+// User implementat și ca UserDetails (pentru integrarea cu Spring Security).
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

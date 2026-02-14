@@ -1,0 +1,20 @@
+# IntelliJ IDEA
+.idea/
+
+# Gradle
+.gradle/
+
+# Build folders
+build/
+out/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Other IntelliJ files
+.shelf/
+.workspace.xml
+httpRequests/
+dataSources/
+dataSources.local.xml
